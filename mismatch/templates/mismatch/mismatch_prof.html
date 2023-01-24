@@ -1,0 +1,31 @@
+{% extends 'mismatch/layout.html' %}
+
+{% block body %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{message.tags}}">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+
+    <h1>Mismatch Profile </h1>
+
+    <div><b>Username: </b>{{ mismatch.username }}</div><br>
+    <div><b>First name: </b>{{ mismatch.first_name }}</div><br>
+    <div><b>Last name: </b>{{ mismatch.last_name }}</div><br>
+    <div><b>Gender: </b>{{ mismatch.gender }}</div><br>
+    <div><b>Birthdate: </b>
+        {% if mismatch.birthdate %}
+            {{ mismatch.birthdate }}
+        {% endif %}
+    </div><br>
+    <div><b>Location: </b>{{mismatch.city}}, {{mismatch.state}}</div><br>
+    
+    <div><b>Picture: </b>
+        {% if mismatch.picture %}
+            <img class="pf_pic" src="{{ mismatch.picture.url }}" alt="Profile Pic">
+        {% else %}
+            <img src="/media/media/images/Default.jpg" alt="Profile Picture" class="users_pf_pic">
+        {% endif %}
+    </div><br><br>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'mismatch/layout.html' %}
+
+{% block body %}
+    
+    {% if user.is_authenticated %}
+        <p class="inform">You are logged in as {{ user.username }}.</p>
+    {% endif %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{message.tags}}">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+
+    <h2 id="title">Mismatch - Edit Profile </h1>
+
+    <form method="post" enctype="multipart/form-data" action="{% url 'edit_profile' %}">
+        {% csrf_token %}
+        <div class="form-group" id="edit_profile">
+            {{ form.as_p }}
+
+            {% if usr_obj.picture %}
+                <img class="pf_pic" src="{{ usr_obj.picture.url }}" alt="Profile Picture">
+            {% endif %}
+        </div>
+       <input type="submit" value="Edit" class="btn btn-success" id="edit_button">
+    </form>
+{% endblock %}

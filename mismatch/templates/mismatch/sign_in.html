@@ -1,0 +1,22 @@
+{% extends 'mismatch/layout.html' %}
+{% block body %}
+    
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{message.tags}}">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+
+    <h2 id="title">Mismatch - Sign in</h2>
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{form}}
+        </div>
+        <input type="submit" value="Register" class="btn btn-success">
+    </form>
+    
+    <div id="log_in">
+        already have an account <a href="{% url 'log_in' %}">Log In</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'mismatch/layout.html' %}
+
+{% block body %}
+
+    {% if user.is_authenticated %}
+        <p class="inform">You are logged in as {{ user.username }}.</p>
+    {% endif %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{message.tags}}">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+
+    <h2 id="title">Mismatch - View Profile </h2>
+
+    <div><b>Username: </b>{{ usr.username }}</div><br>
+    <div><b>First name: </b>{{ usr.first_name }}</div><br>
+    <div><b>Last name: </b>{{ usr.last_name }}</div><br>
+    <div><b>Gender: </b>{{ usr.gender }}</div><br>
+
+    <div><b>Birthdate: </b>
+        {% if usr.birthdate %}
+            {{ usr.birthdate }}
+        {% endif %}
+    </div><br>
+    
+    <div><b>Location: </b>{{usr.city}}, {{usr.state}}</div><br>
+    {% if usr.phone %}
+        <div><b>Contact Number: </b>{{usr.phone}}</div><br>
+    {% endif %}
+    
+    <div><b>Picture: </b>
+        {% if usr_obj.picture %}
+            <img class="pf_pic" src="{{ usr_obj.picture.url }}" alt="Profile Pic">
+        {% endif %}
+    </div><br><br>
+
+    <div id="link">
+        Would you like to <a href="{% url 'edit_profile' %}">edit your profile?</a>
+    </div>
+{% endblock %}

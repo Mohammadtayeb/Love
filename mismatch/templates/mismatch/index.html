@@ -1,0 +1,63 @@
+{% extends 'mismatch/layout.html' %}
+
+{% block body %}
+
+    {% if user.is_authenticated %}
+        <p class="inform">You are logged in as {{ user.username }}.</p>
+    {% endif %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{message.tags}}">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+    
+    <h2 id="title">Mismatch - Where oposites atract!</h2>
+    
+    <ul class="nav">
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a href="{% url 'view_profile' %}" class="nav-link"> &hearts; View Profile</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'edit_profile' %}" class="nav-link">&hearts; Edit Profile</a>
+            </li> 
+            <li class="nav-item">
+                <a href="{% url 'questionnaire' %}" class="nav-link"> &hearts; Questionaire</a>
+            </li>   
+            <li class="nav-item">
+                <a href="{% url 'my_mismatch' %}" class="nav-link"> &hearts; My Mismatch</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'log_out' %}" class="nav-link"> Log Out</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'change_password' %}" class="nav-link"> Change Password</a>
+            </li>
+        {% else %}
+            <a href="{% url 'log_in' %}" class="nav-link">&hearts; Log In</a>
+            <a href="{% url 'register' %}" class="nav-link"> &hearts; Sign In</a>
+        {% endif %}
+
+    </ul>
+    <h3 id="lmembers">Latest Members: </h3>
+    
+    {% if users %}
+        {% for usr in users %}
+                <div>
+                    {% if usr.picture %}
+                        <a href="{% url 'mismatch_prof' user_id=usr.id %}" class="nav-link">
+                            <img src="{{ usr.picture.url }}" alt="Profile Picture" class="users_pf_pic">
+                            <h6 class="Name">{{ usr.username }}</h6>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'mismatch_prof' user_id=usr.id %}" class="nav-link">
+                            <img src="/media/media/images/Default.jpg" alt="Profile Picture" class="users_pf_pic">
+                            <h6 class="Name">{{ usr.username }}</h6>
+                        </a>
+                    {% endif %}
+                </div>       
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+

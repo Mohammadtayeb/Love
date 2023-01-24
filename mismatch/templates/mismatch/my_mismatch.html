@@ -1,0 +1,42 @@
+{% extends 'mismatch/layout.html' %}
+
+{% block body %}
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{message.tags}}">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+    <h2 id="title">Mismatch - My mismatch</h2>
+
+    {% if best_mismatch %}
+        <p>{{ best_mismatch.username }} <br>{{ best_mismatch.city }} {{ best_mismatch.state }}</p>
+
+        {% if best_mismatch.picture %}
+            <img src="{{ best_mismatch.picture.url }}" alt="Profile Picture" class="users_pf_pic">
+        {% else %}
+            <img src="/media/media/images/Default.jpg" alt="Profile Picture" class="users_pf_pic">
+        {% endif %}
+    {% endif %}
+
+    {% if topics %}
+        <br><br><br>
+        <p>You are mismatched on the following {{ num_tps }} topics:</p>
+        <ul>
+            {% for topic in topics %}
+                <li>{{ topic }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if best_mismatch %}
+        <p>View <a href="{% url 'mismatch_prof' user_id=best_mismatch.id %}">{{ best_mismatch.username }}'s Profile</a><br></p>
+        
+        {% if best_mismatch.phone %}
+            <div>Your Mismatch Contact Number: {{ best_mismatch.phone }}</div>
+        {% else %}
+            Sorry, your mismatch has not any contact number yet.
+        {% endif %}
+        
+    {% endif %}
+{% endblock %}
+

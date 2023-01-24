@@ -1,0 +1,42 @@
+{% extends 'mismatch/layout.html' %}
+
+{% block body %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{{message.tags}}">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+    <h2 id="title">Mismatch - Questionnaire</h2>
+
+    <p>How do you feel about each topic?</p>
+
+    <form action="{% url 'questionnaire' %}" method="post">
+        {% csrf_token %}
+        
+        {% for ctg in categories %}
+            <fieldset>
+                <legend class="lgn">{{ctg.name}}</legend>
+                {% for res in responses %}
+                    {% if res.topic.category.id == ctg.id %}
+                        <label>{{res.topic.name}}: </label>
+                        {% if res.response %}
+                            {% if res.response == 1 %}
+                                <input type="radio" name="{{res.id}}" value="1" checked class="q_class" aria-label="love">Love
+                                <input type="radio" name="{{res.id}}" value="-1" class="q_class" aria-label="hate">Hate<br>
+                            {% else %}
+                                <input type="radio" name="{{res.id}}" value="1" class="q_class" aria-label="love">Love
+                                <input type="radio" name="{{res.id}}" value="-1" checked class="q_class" aria-label="hate">Hate<br>
+                            {% endif %}
+                        {% else %}
+                            <input type="radio" name="{{res.id}}" value="1" class="q_class" aria-label="love">Love
+                            <input type="radio" name="{{res.id}}" value="-1" class="q_class" aria-label="hate">Hate<br>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </fieldset>
+        {% endfor %}
+
+        <input type="submit" name="submit" value="Save Questionnaire" class="btn btn-success" id="q_submit">
+    </form>
+{% endblock %}
